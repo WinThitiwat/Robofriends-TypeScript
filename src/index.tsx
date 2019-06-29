@@ -8,7 +8,7 @@ import 'tachyons';
 
 ReactDOM.render(
               <App/>
-              ,document.getElementById('root'));
+              ,document.getElementById('root') as HTMLElement);
 serviceWorker.unregister();
 
 

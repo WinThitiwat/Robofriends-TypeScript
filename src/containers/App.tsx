@@ -10,6 +10,7 @@ export interface IRobot {
   email: string;
 }
 
+// our app doesn't receive any props, so leave empty
 interface IAppProps{}
 
 interface IAppState {
@@ -18,30 +19,29 @@ interface IAppState {
 }
 
 
-class App extends Component {
-  constructor(){
-    super()
+class App extends Component<IAppProps, IAppState> {
+  constructor(props: IAppProps){
+    super(props)
     this.state = {
       robots: [],
-      searchfield: ''
+      searchField: ''
     }
   }
 
-  componentDidMount(){
+  componentDidMount(): void {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then(response=> response.json())
       .then(users=> this.setState({robots: users}))
   }
 
-  onSearchChange = (event) => {
-    this.setState({searchfield: event.target.value})
-    console.log(event.target.value);
+  onSearchChange = (event: React.SyntheticEvent<HTMLInputElement>): void => {
+    this.setState({searchField: event.currentTarget.value})
   }
 
-  render(){
-    const {robots, searchfield} = this.state;
+  render(): JSX.Element {
+    const {robots, searchField} = this.state;
     const filteredRobots = robots.filter(robot => {
-      return robot.name.toLowerCase().includes(searchfield.toLowerCase());
+      return robot.name.toLowerCase().includes(searchField.toLowerCase());
     });
   
     if (robots.length){ // if there is more than 0, then it's true
